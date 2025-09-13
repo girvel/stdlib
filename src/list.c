@@ -43,6 +43,7 @@ void std_list_push(Std_List *self, void *value) {
 }
 
 void *std_list_at(Std_List *self, size_t index) {
+    SAFETY_ASSERT(index < self->capacity && "Out-of-bounds access attempt");
     return self->address + self->item_size * index;
 }
 
