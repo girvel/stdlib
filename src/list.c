@@ -20,6 +20,8 @@ size_t _find_capacity_increase(size_t prev_capacity, size_t min_increase) {
 }
 
 void std_list_extend_exact(Std_List *self, size_t capacity_increase) {
+    if (capacity_increase == 0) return;
+
     size_t old_capacity = self->capacity;
     self->capacity += capacity_increase;
     void *new_address = realloc(self->address, self->capacity * self->item_size);
@@ -40,6 +42,16 @@ void std_list_push(Std_List *self, void *value) {
     if (self->length >= self->capacity) std_list_extend(self, 1);
     memcpy(std_list_at(self, self->length), value, self->item_size);
     self->length++;
+}
+
+void std_list_push_many(Std_List *self, size_t count, void *values) {
+    if (self->length + count > self->capacity) std_list_extend(self, count);
+    
+    for (size_t i = 0; i < count; i++) {
+        memcpy(std_list_at(self, self->length + i), values + self->item_size * i, self->item_size);
+    }
+
+    self->length += count;
 }
 
 void *std_list_at(Std_List *self, size_t index) {
