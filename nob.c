@@ -34,7 +34,7 @@ bool step_build() {
     nob_cc(&cmd);
     nob_cc_flags(&cmd);
     nob_cc_inputs(&cmd, "main.c", SRC_FOLDER"list.c");
-    nob_cc_output(&cmd, "main.o");
+    nob_cc_output(&cmd, BUILD_FOLDER"main.o");
 
     MUST(nob_cmd_run(&cmd));
 
@@ -45,7 +45,7 @@ bool step_run() {
     nob_log(NOB_INFO, "  RUN STAGE");
 
     Nob_Cmd cmd = {0};
-    nob_cmd_append(&cmd, "./main.o");
+    nob_cmd_append(&cmd, "./"BUILD_FOLDER"main.o");
     MUST(nob_cmd_run(&cmd));
 
     return true;
