@@ -3,6 +3,7 @@
 #include "nob.h"
 
 #define BUILD_FOLDER ".build/"
+#define SRC_FOLDER "src/"
 #define MUST(X) do { if (!X) return false; } while (0)
 
 bool step_build();
@@ -32,7 +33,7 @@ bool step_build() {
     Nob_Cmd cmd = {0};
     nob_cc(&cmd);
     nob_cc_flags(&cmd);
-    nob_cc_inputs(&cmd, "main.c");
+    nob_cc_inputs(&cmd, "main.c", SRC_FOLDER"list.c");
     nob_cc_output(&cmd, "main.o");
 
     MUST(nob_cmd_run(&cmd));
