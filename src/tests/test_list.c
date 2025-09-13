@@ -1,9 +1,53 @@
+#include "../list.h"
 #include "../test.h"
+#include "../macros.h"
 
-void test_success() {
-    STD_ASSERT(true);
+void test_std_list_push() {
+    Std_List demo;
+    std_list_init(&demo, sizeof(int));
+    std_list_push(&demo, REF(1));
+    std_list_push(&demo, REF(2));
+    std_list_push(&demo, REF(3));
+
+    int *inner = (int *)demo.address;
+    STD_ASSERT(inner[0] == 1);
+    STD_ASSERT(inner[1] == 2);
+    STD_ASSERT(inner[2] == 3);
+
+    STD_ASSERT(demo.length == 3);
+    STD_ASSERT(demo.capacity == 4);
+
+    std_list_free(&demo);
 }
 
-void test_failure() {
-    STD_ASSERT(false);
+void test_std_list_push_many() {
+    Std_List demo;
+    std_list_init(&demo, sizeof(int));
+    int content[] = {1, 2, 3};
+    std_list_push_many(&demo, 3, content);
+
+    int *inner = (int *)demo.address;
+    STD_ASSERT(inner[0] == 1);
+    STD_ASSERT(inner[1] == 2);
+    STD_ASSERT(inner[2] == 3);
+
+    STD_ASSERT(demo.length == 3);
+    STD_ASSERT(demo.capacity == 4);
+
+    std_list_free(&demo);
+}
+
+void test_std_list_usage() {
+    Std_List demo;
+    std_list_init(&demo, sizeof(int));
+    STD_LIST_PUSH_MANY(&demo, 1, 2, 3, 42, 69, 1337);
+
+    int expected_values[] = {1, 2, 3, 42, 69, 1337};
+    STD_LIST_FOR(i, e, int, &demo) {
+        STD_ASSERT(expected_values[i] == *e);
+    }
+
+    STD_ASSERT(demo.capacity == 8);
+    STD_ASSERT(demo.length == 6);
+    std_list_free(&demo);
 }
