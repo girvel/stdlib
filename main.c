@@ -9,9 +9,7 @@ int main() {
     // NEXT tests framework
     Std_List demo;
     std_list_init(&demo, sizeof(int));
-
-    int values[] = {1, 2, 3, 42, 69, 1337};
-    std_list_push_many(&demo, sizeof(values) / sizeof(int), values);
+    STD_LIST_PUSH_MANY(&demo, 1, 2, 3, 42, 69, 1337);
 
     // NEXT try foreach?
     for (size_t i = 0; i < demo.length; i++) {
