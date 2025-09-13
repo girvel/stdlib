@@ -22,6 +22,8 @@ int main() {
         printf("demo[%zu] = %i\n", i, *(int *)std_list_at(&demo, i));
     }
 
+    printf("demo.capacity = %zu\n", demo.capacity);
+
     printf("Hello, world!\n");
     return 0;
 }

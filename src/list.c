@@ -10,9 +10,13 @@ void std_list_init(Std_List *self, size_t item_size) {
     self->capacity = 0;
 }
 
-size_t _find_capacity(size_t prev_capacity, size_t size) {
-    for (; prev_capacity < size; prev_capacity += MAX2(1U, prev_capacity));
-    return prev_capacity;
+size_t _find_capacity_increase(size_t prev_capacity, size_t min_increase) {
+    size_t increase; for (
+        increase = prev_capacity;
+        increase < min_increase;
+        increase += MAX2(1U, increase)
+    );
+    return increase;
 }
 
 void std_list_extend_exact(Std_List *self, size_t capacity_increase) {
@@ -28,8 +32,8 @@ void std_list_extend_exact(Std_List *self, size_t capacity_increase) {
 void std_list_extend(Std_List *self, size_t min_capacity_increase) {
     std_list_extend_exact(
         self,
-        _find_capacity(self->capacity, self->capacity + min_capacity_increase) - self->capacity
-    );  // NEXT refactor - and + out
+        _find_capacity_increase(self->capacity, min_capacity_increase)
+    );
 }
 
 void std_list_push(Std_List *self, void *value) {
