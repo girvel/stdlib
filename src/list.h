@@ -25,7 +25,9 @@ void std_list_free(Std_List *self);
 #define STD_LIST_FOR(INDEX_IDENTIFIER, ELEMENT_IDENTIFIER, ITEM_TYPE, LIST) \
     Std_List *_std_list_for_list = LIST; \
     size_t _std_list_for_length = _std_list_for_list->length; \
-    ITEM_TYPE *e = (ITEM_TYPE *)std_list_at(_std_list_for_list, 0); \
+    ITEM_TYPE *e = _std_list_for_length == 0 \
+        ? NULL \
+        : (ITEM_TYPE *)std_list_at(_std_list_for_list, 0); \
     for ( \
         size_t INDEX_IDENTIFIER = 0; \
         INDEX_IDENTIFIER < _std_list_for_length; \
