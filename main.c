@@ -5,15 +5,14 @@
 // or something like
 
 int main() {
-    // NEXT push_many
     // NEXT tests framework
     Std_List demo;
     std_list_init(&demo, sizeof(int));
     STD_LIST_PUSH_MANY(&demo, 1, 2, 3, 42, 69, 1337);
 
-    // NEXT try foreach?
-    for (size_t i = 0; i < demo.length; i++) {
-        printf("demo[%zu] = %i\n", i, *(int *)std_list_at(&demo, i));
+    // NEXT safe empty loop
+    STD_LIST_FOR(i, e, int, &demo) {
+        printf("demo[%zu] = %i\n", i, *e);
     }
 
     printf("demo.capacity = %zu\n", demo.capacity);
