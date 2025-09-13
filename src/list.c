@@ -38,8 +38,7 @@ void std_list_extend(Std_List *self, size_t min_capacity_increase) {
 
 void std_list_push(Std_List *self, void *value) {
     if (self->length >= self->capacity) std_list_extend(self, 1);
-    memcpy(self->address + self->item_size * self->length, value, self->item_size);
-    // NEXT use std_list_at
+    memcpy(std_list_at(self, self->length), value, self->item_size);
     self->length++;
 }
 
