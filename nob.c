@@ -39,11 +39,11 @@ bool step_build(bool safe) {
     nob_cc(&cmd);
     nob_cc_flags(&cmd);
     nob_cc_inputs(&cmd,
-        "main.c",
+        "test.c",
         SRC_FOLDER"list.c",
         SRC_FOLDER"test.c"
     );
-    nob_cc_output(&cmd, BUILD_FOLDER"main.o");
+    nob_cc_output(&cmd, BUILD_FOLDER"test.o");
     if (safe) {
         nob_cmd_append(&cmd, "-DSTD_SAFETY=1");
     }
@@ -57,7 +57,7 @@ bool step_run() {
     nob_log(NOB_INFO, "  RUN STAGE");
 
     Nob_Cmd cmd = {0};
-    nob_cmd_append(&cmd, "./"BUILD_FOLDER"main.o");
+    nob_cmd_append(&cmd, "./"BUILD_FOLDER"test.o");
     MUST(nob_cmd_run(&cmd));
 
     return true;

@@ -4,8 +4,6 @@
 // goal: std_format("{0} is {0}", 42)
 // or something like
 
-// NEXT rename to test.c
-// NEXT really test the list
 int main() {
     std_run_tests((Std_Test []) {
         {"test_std_list_push", test_std_list_push},
