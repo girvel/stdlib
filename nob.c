@@ -3,9 +3,13 @@
 #define NOB_IMPLEMENTATION
 #include "nob.h"
 
+#define MUST(X) do { if (!X) return false; } while (0)
+
 #define BUILD_FOLDER ".build/"
 #define SRC_FOLDER "src/"
-#define MUST(X) do { if (!X) return false; } while (0)
+#define OUTFILE BUILD_FOLDER"stdlib.so"
+#define SOURCES_N 3
+const char *sources[SOURCES_N] = {SRC_FOLDER"test.c", SRC_FOLDER"string.c", SRC_FOLDER"list.c"};
 
 // NEXT CLI:
 // NEXT /include for headers
@@ -19,12 +23,8 @@ bool help(int argc, char **argv) {
 }
 
 bool prep();
-bool build(const char *, bool);
-bool build_sources(bool);
-bool build_tests();
+bool build(size_t, const char **, bool);
 bool link_(size_t, const char **, const char *);
-bool link_library();
-bool link_tests();
 bool run_tests();
 
 bool run(int argc, char **argv) {
@@ -37,24 +37,24 @@ bool run(int argc, char **argv) {
 
     if (argc > 3 && strcmp(argv[1], "build") == 0) {
         MUST(prep());
-        MUST(build(argv[2], safe));
+        MUST(build(argc - 3, (const char **)argv + 2, safe));
         MUST(link_(argc - 3, (const char **)argv + 2, argv[argc - 1]));
         return true;
     }
 
     if (argc == 2 && strcmp(argv[1], "build") == 0) {
         return prep()
-            && build_sources(safe)
-            && link_library();
+            && build(SOURCES_N, sources, safe)
+            && link_(SOURCES_N, sources, OUTFILE);
     }
 
-    if (argc == 2 && strcmp(argv[1], "test") == 0) {
-        return prep()
-            && build_sources(safe)
-            && build_tests()
-            && link_tests()
-            && run_tests();
-    }
+    // if (argc == 2 && strcmp(argv[1], "test") == 0) {
+    //     return prep()
+    //         && build_sources(safe)
+    //         && build_tests()
+    //         && link_tests()
+    //         && run_tests();
+    // }
 
     return help(argc, argv);
 }
@@ -66,6 +66,7 @@ Nob_String_Builder src_to_obj(const char *src_path) {
     assert(str.items[str.count - 2] == '.');
     assert(str.items[str.count - 1] == 'c');
     str.items[str.count - 1] = 'o';
+    nob_sb_append_null(&str);
     return str;
 }
 
@@ -75,18 +76,22 @@ bool prep() {
         && nob_write_entire_file(BUILD_FOLDER".gitignore", "*", 1);
 }
 
-bool build(const char *source_path, bool safe) {
+bool build(size_t sources_n, const char **source_paths, bool safe) {
     Nob_Cmd cmd = {0};
-    nob_cc(&cmd);
-    nob_cc_flags(&cmd);
-    nob_cmd_append(&cmd, "-c");
-    nob_cc_inputs(&cmd, source_path);
+    for (size_t i = 0; i < sources_n; ++i) {
+        nob_cc(&cmd);
+        nob_cc_flags(&cmd);
+        nob_cmd_append(&cmd, "-c");
+        nob_cmd_append(&cmd, "-fPIC");
+        nob_cc_inputs(&cmd, source_paths[i]);
 
-    Nob_String_Builder output_path = src_to_obj(source_path);
-    nob_cc_output(&cmd, output_path.items);
+        Nob_String_Builder output_path = src_to_obj(source_paths[i]);
+        nob_cc_output(&cmd, output_path.items);
 
-    MUST(nob_cmd_run(&cmd));
-    nob_sb_free(output_path);
+        bool result = nob_cmd_run(&cmd);
+        nob_sb_free(output_path);
+        if (!result) return false;
+    }
     return true;
 }
 
@@ -109,22 +114,6 @@ bool link_(size_t sources_n, const char **sources, const char *outfile) {
     free(object_files);
 
     return result;
-}
-
-bool build_sources(bool safe) {
-    
-}
-
-bool build_tests() {
-    
-}
-
-bool link_library() {
-    
-}
-
-bool link_tests() {
-    
 }
 
 bool run_tests() {
