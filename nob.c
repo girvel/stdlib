@@ -6,6 +6,9 @@
 #define SRC_FOLDER "src/"
 #define MUST(X) do { if (!X) return false; } while (0)
 
+// NEXT `./nob build` to build the library, `./nob test` to run tests,
+//   /include for headers
+
 bool step_build(bool);
 bool step_run();
 bool help(int argc, char **argv);
@@ -41,7 +44,8 @@ bool step_build(bool safe) {
     nob_cc_inputs(&cmd,
         "test.c",
         SRC_FOLDER"list.c",
-        SRC_FOLDER"test.c"
+        SRC_FOLDER"test.c",
+        SRC_FOLDER"string.c"
     );
     nob_cc_output(&cmd, BUILD_FOLDER"test.o");
     if (safe) {

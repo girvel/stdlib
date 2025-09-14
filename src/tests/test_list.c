@@ -2,6 +2,11 @@
 #include "../test.h"
 #include "../macros.h"
 
+#define STD_LIST_TESTS \
+    {"test_std_list_push", test_std_list_push}, \
+    {"test_std_list_push_many", test_std_list_push_many}, \
+    {"test_std_list_usage", test_std_list_usage}
+
 void test_std_list_push() {
     Std_List demo;
     std_list_init(&demo, sizeof(int));

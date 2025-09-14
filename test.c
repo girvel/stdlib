@@ -1,16 +1,16 @@
 #include "src/test.h"
 #include "src/tests/test_list.c"
+#include "src/tests/test_string.c"
 
-// goal: std_format("{0} is {0}", 42)
-// or something like
+// GOAL std_string_format(&str, "Hello, %s! The answer is %i", "world", 42)
+//   or something like
+
+// GOAL Std_Vector
 
 int main() {
-    std_run_tests((Std_Test []) {
-        {"test_std_list_push", test_std_list_push},
-        {"test_std_list_push_many", test_std_list_push_many},
-        {"test_std_list_usage", test_std_list_usage},
+    return !std_run_tests((Std_Test []) {
+        STD_LIST_TESTS,
+        STD_STRING_TESTS,
         {NULL, NULL},
     });
-
-    return 0;
 }
