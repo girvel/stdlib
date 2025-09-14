@@ -40,19 +40,19 @@ void std_list_extend(Std_List *self, size_t min_capacity_increase) {
 
 void std_list_push(Std_List *self, void *value) {
     if (self->length >= self->capacity) std_list_extend(self, 1);
-    memcpy(std_list_at(self, self->length), value, self->item_size);
+    memcpy(std_list_at(*self, self->length), value, self->item_size);
     self->length++;
 }
 
 void std_list_push_many(Std_List *self, size_t count, void *values) {
     if (self->length + count > self->capacity) std_list_extend(self, count);
-    memcpy(std_list_at(self, self->length), values, self->item_size * count);
+    memcpy(std_list_at(*self, self->length), values, self->item_size * count);
     self->length += count;
 }
 
-void *std_list_at(Std_List *self, size_t index) {
-    SAFETY_ASSERT(index < self->capacity && "Out-of-bounds access attempt");
-    return self->address + self->item_size * index;
+void *std_list_at(Std_List self, size_t index) {
+    SAFETY_ASSERT(index < self.capacity && "Out-of-bounds access attempt");
+    return self.address + self.item_size * index;
 }
 
 void std_list_free(Std_List *self) {

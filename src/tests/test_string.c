@@ -17,5 +17,7 @@ void test_std_string_from() {
 
 void test_std_string_format() {
     Std_String demo;
-    std_string_format(&demo, "Hello, %s! The answer is %i", "world", 42);
+    std_string_format(&demo, "Hello, %s! The answer is %i!", "world", 42);
+
+    STD_ASSERT(strcmp("Hello, world! The answer is 42!", std_string_c(demo)) == 0);
 }

@@ -49,7 +49,7 @@ void test_std_list_usage() {
     STD_LIST_PUSH_MANY(&demo, 1, 2, 3, 42, 69, 1337);
 
     int32_t expected_values[] = {1, 2, 3, 42, 69, 1337};
-    STD_LIST_FOR(i, e, int32_t, &demo) {
+    STD_LIST_FOR(i, e, int32_t, demo) {
         STD_ASSERT(expected_values[i] == *e);
     }
 
