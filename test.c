@@ -12,6 +12,7 @@ int main() {
     return !std_run_tests((Std_Test []) {
         STD_LIST_TESTS,
         STD_STRING_TESTS,
+        STD_VECTOR_TESTS,
         {NULL, NULL},
     });
 }

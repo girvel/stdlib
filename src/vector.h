@@ -27,5 +27,12 @@ void CONCAT3(std_, _STD_VECTOR_SHORT, _init)(_STD_VECTOR_FULL *self, ...) {
     va_end(args);
 }
 
+bool CONCAT3(std_, _STD_VECTOR_SHORT, _eq)(_STD_VECTOR_FULL self, _STD_VECTOR_FULL other) {
+    for (size_t i = 0; i < N; ++i) {
+        if (self.items[i] != other.items[i]) return false;
+    }
+    return true;
+}
+
 #undef T
 #undef N
