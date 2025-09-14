@@ -25,7 +25,6 @@ void std_list_extend_exact(Std_List *self, size_t capacity_increase) {
 
     size_t old_capacity = self->capacity;
     self->capacity += capacity_increase;
-    printf("REALLOC!\n");
     void *new_address = realloc(self->address, self->capacity * self->item_size);
     if (self->address != new_address && self->address != NULL) {
         printf("1\n");

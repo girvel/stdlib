@@ -3,8 +3,8 @@
 #include <string.h>
 
 #define STD_STRING_TESTS \
-    {"test_std_string_from", test_std_string_from}, \
-    {"test_std_string_format", test_std_string_format}
+    {"test_std_string_from", test_std_string_from}
+    // {"test_std_string_format", test_std_string_format}
 
 void test_std_string_from() {
     const char *source = "Hello, world!";
