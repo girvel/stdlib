@@ -46,11 +46,7 @@ void std_list_push(Std_List *self, void *value) {
 
 void std_list_push_many(Std_List *self, size_t count, void *values) {
     if (self->length + count > self->capacity) std_list_extend(self, count);
-    
-    for (size_t i = 0; i < count; i++) {
-        memcpy(std_list_at(self, self->length + i), values + self->item_size * i, self->item_size);
-    }
-
+    memcpy(std_list_at(self, self->length), values, self->item_size * count);
     self->length += count;
 }
 
