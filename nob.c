@@ -18,7 +18,6 @@ const char *sources[SOURCES_N] = {SOURCES};
 #define TEST_ENTRYPOINT "test.c"
 const char *test_sources[TEST_SOURCES_N] = {SOURCES, TEST_ENTRYPOINT};
 
-// NEXT CLI:
 // NEXT /include for headers
 
 bool help(int argc, char **argv) {

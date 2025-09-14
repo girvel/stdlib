@@ -5,21 +5,6 @@
 #define N 4
 #include "../vector.c"
 
-// NEEDED:
-// x eq
-// - add
-// - sub
-// - mul
-// - div
-// - mod
-// - unm
-// - le
-// - lt
-// - abs
-// - abs2
-// - normalized
-// - normalized2
-
 #define STD_VECTOR_TESTS \
     {"test_std_vector_init", test_std_vector_init}, \
     {"test_std_vector_eq", test_std_vector_eq}
