@@ -1,6 +1,7 @@
 #include "../list.h"
 #include "../test.h"
 #include "../macros.h"
+#include <stdint.h>
 
 #define STD_LIST_TESTS \
     {"test_std_list_push", test_std_list_push}, \
@@ -9,12 +10,12 @@
 
 void test_std_list_push() {
     Std_List demo;
-    std_list_init(&demo, sizeof(int));
+    std_list_init(&demo, sizeof(int32_t));
     std_list_push(&demo, STD_REF(1));
     std_list_push(&demo, STD_REF(2));
     std_list_push(&demo, STD_REF(3));
 
-    int *inner = (int *)demo.address;
+    int32_t *inner = (int32_t *)demo.address;
     STD_ASSERT(inner[0] == 1);
     STD_ASSERT(inner[1] == 2);
     STD_ASSERT(inner[2] == 3);
@@ -27,11 +28,11 @@ void test_std_list_push() {
 
 void test_std_list_push_many() {
     Std_List demo;
-    std_list_init(&demo, sizeof(int));
-    int content[] = {1, 2, 3};
+    std_list_init(&demo, sizeof(int32_t));
+    int32_t content[] = {1, 2, 3};
     std_list_push_many(&demo, 3, content);
 
-    int *inner = (int *)demo.address;
+    int32_t *inner = (int32_t *)demo.address;
     STD_ASSERT(inner[0] == 1);
     STD_ASSERT(inner[1] == 2);
     STD_ASSERT(inner[2] == 3);
@@ -44,11 +45,11 @@ void test_std_list_push_many() {
 
 void test_std_list_usage() {
     Std_List demo;
-    std_list_init(&demo, sizeof(int));
+    std_list_init(&demo, sizeof(int32_t));
     STD_LIST_PUSH_MANY(&demo, 1, 2, 3, 42, 69, 1337);
 
-    int expected_values[] = {1, 2, 3, 42, 69, 1337};
-    STD_LIST_FOR(i, e, int, &demo) {
+    int32_t expected_values[] = {1, 2, 3, 42, 69, 1337};
+    STD_LIST_FOR(i, e, int32_t, &demo) {
         STD_ASSERT(expected_values[i] == *e);
     }
 

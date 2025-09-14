@@ -5,7 +5,7 @@
 // GOAL std_string_format(&str, "Hello, %s! The answer is %i", "world", 42)
 //   or something like
 
-// GOAL Std_Vector
+// GOAL Std_Vector + `./nob build src/vector.c`
 
 int main() {
     return !std_run_tests((Std_Test []) {
