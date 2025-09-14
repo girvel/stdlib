@@ -8,38 +8,44 @@ void std_string_from(Std_String *self, const char *__restrict base) {
     std_list_push_many(&self->list, strlen(base), (void *)base);
 }
 
-// size_t _get_format_size(const char *__restrict format, ...) {
-//     size_t result = sprintf
-// }
-
 void std_string_format(Std_String *self, const char *__restrict format, ...) {
-    std_list_init(&self->list, sizeof(char));
-    std_list_extend_exact(&self->list, strlen(format) + 10);
+    Std_List *list = &self->list;
+    std_list_init(list, sizeof(char));
 
     va_list args;
     va_start(args, format);
-    char *next = self->list.address;
+    size_t i = 0;
     while (*format != '\0') {
+        printf("%.*s\n", (int) i, (char *)list->address);
+        printf("%c\n", *format);
         if (strncmp(format, "%i", 2) == 0) {
+            int value = va_arg(args, int);
+            int length = snprintf(NULL, 0, "%i", value);
+            std_list_extend(list, length);
+            sprintf(std_list_at(*list, i), "%i", value);
             format += 2;
-            next += sprintf(next, "%i", va_arg(args, int));
+            i += length;
         } else if (strncmp(format, "%s", 2) == 0) {
             const char *value = va_arg(args, const char *);
             int length = strlen(value);
-            memcpy(next, value, length);
+            std_list_extend(list, length);
+            memcpy(std_list_at(*list, i), value, length);
             format += 2;
-            next += length;
+            i += length;
         } else {
-            *next = *format;
+            std_list_extend(list, 1);
+            printf("1\n");
+            *(char *)std_list_at(*list, i) = *format;
             format++;
-            next++;
+            i++;
         }
     }
 
-    *next = '\0';
-    next++;
+    std_list_extend(list, 1);
+    *(char *)std_list_at(*list, i) = '\0';
+    i++;
 
-    self->list.length = (next - (char *)self->list.address);
+    self->list.length = i;
     va_end(args);
 }
 
