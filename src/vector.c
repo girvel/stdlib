@@ -1,6 +1,7 @@
 #include "macros.h"
 #include <stdarg.h>
 #include <stddef.h>
+#include <stdbool.h>
 
 
 #ifndef T

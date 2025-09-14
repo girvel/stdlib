@@ -3,7 +3,7 @@
 
 #define T int32_t
 #define N 4
-#include "../vector.h"
+#include "../vector.c"
 
 #define STD_VECTOR_TESTS \
     {"test_std_vector_init", test_std_vector_init}, \
