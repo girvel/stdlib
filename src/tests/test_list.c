@@ -10,9 +10,9 @@
 void test_std_list_push() {
     Std_List demo;
     std_list_init(&demo, sizeof(int));
-    std_list_push(&demo, REF(1));
-    std_list_push(&demo, REF(2));
-    std_list_push(&demo, REF(3));
+    std_list_push(&demo, STD_REF(1));
+    std_list_push(&demo, STD_REF(2));
+    std_list_push(&demo, STD_REF(3));
 
     int *inner = (int *)demo.address;
     STD_ASSERT(inner[0] == 1);

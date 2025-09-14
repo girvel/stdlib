@@ -14,7 +14,7 @@ size_t _find_capacity_increase(size_t prev_capacity, size_t min_increase) {
     size_t increase; for (
         increase = prev_capacity;
         increase < min_increase;
-        increase += MAX2(1U, increase)
+        increase += STD_MAX2(1U, increase)
     );
     return increase;
 }
