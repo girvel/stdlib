@@ -8,6 +8,10 @@ void std_string_from(Std_String *self, const char *__restrict base) {
     std_list_push_many(&self->list, strlen(base), (void *)base);
 }
 
+// issues:
+//   - varargs are bothersome, it's terrible to pass them to other functions. Do we even need them?
+//   - reallocation happens far too often, that's a bug
+//   - does std_list_extend mean "increase capacity by at least X" or "increase capacity so length + X fits"?
 void std_string_format(Std_String *self, const char *__restrict format, ...) {
     Std_List *list = &self->list;
     std_list_init(list, sizeof(char));
@@ -34,7 +38,6 @@ void std_string_format(Std_String *self, const char *__restrict format, ...) {
             i += length;
         } else {
             std_list_extend(list, 1);
-            printf("1\n");
             *(char *)std_list_at(*list, i) = *format;
             format++;
             i++;

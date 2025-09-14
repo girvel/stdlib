@@ -3,6 +3,12 @@
 #include <assert.h>
 
 
+#define _CONCAT2(A, B) A##B
+#define CONCAT2(A, B) _CONCAT2(A, B)
+
+#define _CONCAT3(A, B, C) A##B##C
+#define CONCAT3(A, B, C) _CONCAT3(A, B, C)
+
 #define _CONCAT4(A, B, C, D) A##B##C##D
 #define CONCAT4(A, B, C, D) _CONCAT4(A, B, C, D)
 
