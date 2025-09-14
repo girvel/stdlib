@@ -25,7 +25,7 @@ bool run(int argc, char **argv) {
         return step_build(safe) && step_run();
     }
 
-    if (strcmp(argv[1], "build") == 0) {
+    if (argc == 2 && strcmp(argv[1], "build") == 0) {
         return step_build(safe);
     }
 
